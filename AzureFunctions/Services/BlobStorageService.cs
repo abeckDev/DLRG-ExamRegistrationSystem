@@ -38,5 +38,11 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions.Services
             }
             
         }
+
+        public async Task DeleteBlob(string blobName)
+        {
+            BlobClient blobClient = containerClient.GetBlobClient(blobName);
+            await blobClient.DeleteIfExistsAsync();
+        }
     }
 }
