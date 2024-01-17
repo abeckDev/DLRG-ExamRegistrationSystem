@@ -25,7 +25,7 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
             var examRegistrationRequest = new ExamRegistrationRequest(req.Query);
             
             //Get Secrets from Envrionment Variables and initialize DlrgCloudService
-            var dlrgcloud = new DlrgCloudService(System.Environment.GetEnvironmentVariable("dlrgCloudBasePath") + examRegistrationRequest.Landesverband + "/");
+            var dlrgcloud = new DlrgCloudService();
 
             // Extract the picture from the request
             var picture = req.Body;
@@ -39,8 +39,9 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
                 picture.CopyTo(memoryStream);
                 var pictureBytes = memoryStream.ToArray();
 
+                // Broken because renewed
                 // Write it to Nextcloud with the new filename
-                dlrgcloud.UploadBlobToDlrgCloudAsync(newFilename, pictureBytes);
+                //dlrgcloud.UploadBlobToDlrgCloudAsync(newFilename, pictureBytes);
             }
 
             // End request successfully
