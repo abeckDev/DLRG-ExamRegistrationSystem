@@ -24,7 +24,7 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
             //Detect Landesverband from Filename
             var landesverband = name.Split("-")[0];
             //Remove Landesverband from Filename
-            var filename = name.Split("-")[1]+".pdf";
+            var filename = name.Substring(name.IndexOf('-') + 1);
 
             //Read the document into a MemoryStream
             var content = new MemoryStream();
