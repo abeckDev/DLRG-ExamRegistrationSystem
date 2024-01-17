@@ -22,8 +22,9 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
             var dlrgcloud = new DlrgCloudService();
             //Detect Landesverband from Filename
             var landesverband = name.Split("-")[0];
+
             //Remove Landesverband from Filename
-            var filename = name.Split("-")[1] + ".jpg";
+            var filename = name.Substring(name.IndexOf('-') + 1);
 
             //Read the picture into a MemoryStream
             var content = new MemoryStream();
