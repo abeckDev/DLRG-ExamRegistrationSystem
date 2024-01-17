@@ -8,19 +8,19 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions.Services;
 public class DlrgCloudService
 {
     private readonly HttpClient _httpClient;
+    private readonly string BaseUrl;
 
-    public DlrgCloudService(string baseUrl, string username, string password)
+    public DlrgCloudService()
     {
+        BaseUrl = Environment.GetEnvironmentVariable("dlrgCloudBasePath");
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(baseUrl)
+            BaseAddress = new Uri(BaseUrl)
         };
 
-        var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}")));
+        var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{System.Environment.GetEnvironmentVariable("dlrgCloudUsername")}:{System.Environment.GetEnvironmentVariable("dlrgCloudPassword")}")));
         _httpClient.DefaultRequestHeaders.Authorization = authValue;
     }
-
-    
 
     //Create a method that sends a MKCOL request to the DLRG Cloud
     public Task<string> CreateDirectory(string directoryDir)
@@ -28,7 +28,7 @@ public class DlrgCloudService
         var request = new HttpRequestMessage
         {
             Method = new HttpMethod("MKCOL"),
-            RequestUri = new Uri("https://www.dlrg.cloud/remote.php/dav/files/albe/1904000-Leitung%20Einsatz/10-FB_Bootswesen/Test/Sachsen/")
+            RequestUri = new Uri(BaseUrl+directoryDir)
         };
         
         return _httpClient.SendAsync(request).ContinueWith(responseTask =>
@@ -40,7 +40,6 @@ public class DlrgCloudService
     }
 
 
-    //URL https://www.dlrg.cloud/remote.php/dav/files/albe/1904000-Leitung%20Einsatz/10-FB_Bootswesen/Test/
     public async Task<string> UploadBlobToDlrgCloudAsync(string endpoint, byte[] content)
     {
         var httpContent = new ByteArrayContent(content);

@@ -21,19 +21,17 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            //save query parameters to string variables
-            var name = req.Query["name"];
-            var surname = req.Query["surname"];
-            //save birthday from query parameters to DateTime variable
-            var birthday = System.DateTime.Parse(req.Query["birthday"]);
-            //Save Landesverband from query parameters to Landesverband variable as enum Landesverband
-            var landesverband = (Landesverband)System.Enum.Parse(typeof(Landesverband), req.Query["landesverband"]);
+            //Extract query parameters from request and initialize ExamRegistrationRequest
+            var examRegistrationRequest = new ExamRegistrationRequest(req.Query);
+            
+            //Get Secrets from Envrionment Variables and initialize DlrgCloudService
+            var dlrgcloud = new DlrgCloudService(System.Environment.GetEnvironmentVariable("dlrgCloudBasePath") + examRegistrationRequest.Landesverband + "/");
 
             // Extract the picture from the request
             var picture = req.Body;
 
-            // Change the filename
-            var newFilename = surname + ", " + name + " " + birthday.ToString("yyyy-MM-dd") + ".jpg";
+            // Set the filename
+            var newFilename = examRegistrationRequest.Surname + ", " + examRegistrationRequest.Name + " " + examRegistrationRequest.Birthday.ToString("yyyy-MM-dd") + ".jpg";
 
             // Convert the picture to byte[]
             using (var memoryStream = new MemoryStream())
@@ -42,8 +40,6 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
                 var pictureBytes = memoryStream.ToArray();
 
                 // Write it to Nextcloud with the new filename
-                var dlrgcloud = new DlrgCloudService("https://www.dlrg.cloud/remote.php/dav/files/albe/1904000-Leitung%20Einsatz/10-FB_Bootswesen/Test/" + landesverband + "/", "albe", "r73yQ-mA55R-CxBfy-HkWXM-x2por");
-
                 dlrgcloud.UploadBlobToDlrgCloudAsync(newFilename, pictureBytes);
             }
 
