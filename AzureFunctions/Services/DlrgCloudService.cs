@@ -34,16 +34,15 @@ public class DlrgCloudService
         return _httpClient.SendAsync(request).ContinueWith(responseTask =>
         {
             var response = responseTask.Result;
-            response.EnsureSuccessStatusCode();
             return response.Content.ReadAsStringAsync();
         }).Unwrap();
     }
 
 
-    public async Task<string> UploadBlobToDlrgCloudAsync(string endpoint, byte[] content)
+    public async Task<string> UploadBlobToDlrgCloudAsync(string endpoint, Stream content, string mediaType)
     {
-        var httpContent = new ByteArrayContent(content);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+        var httpContent = new StreamContent(content);
+        httpContent.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
         var response = await _httpClient.PutAsync(endpoint, httpContent);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadAsStringAsync();
