@@ -27,8 +27,6 @@ namespace AbeckDev.DLRG.ExamRegistration.Functions
             //Return all the possible values from enum Landesverband in json with their string value
             response.WriteString(JsonConvert.SerializeObject(System.Enum.GetNames(typeof(Landesverband))));
 
-
-
             return response;
         }
     }
