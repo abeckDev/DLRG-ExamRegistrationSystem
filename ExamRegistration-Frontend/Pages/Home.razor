@@ -1,0 +1,122 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<form method="post" @onsubmit="submitForm" @formname="malsehen" class="form-horizontal">
+    <fieldset>
+        <!-- Form Name -->
+        <legend>
+            <b>Teilnahmevoraussetzungen AL Bootsf&uuml;hrerschein</b>
+        </legend>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Name">Name</label>
+            <div class="col-md-4">
+                <InputText @bind-Value="examRegistrationRequest.Surname" id="Name" name="Name" type="text"
+                           placeholder="Name" class="form-control input-md" required="" />
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Vorname">Vorname</label>
+            <div class="col-md-4">
+                <InputText @bind-Value="examRegistrationRequest.Name" id="Vorname" name="Vorname" type="text"
+                           placeholder="Vorname" class="form-control input-md" required="" />
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Geburtsdatum">Geburtsdatum</label>
+            <div class="col-md-4">
+                <InputDate Type="InputDateType.Date" CurrentValue="@DateTime.Today.ToString("dd.MM.yyyy")" @bind-Value="examRegistrationRequest.Birthday" id="Geburtsdatum" DisplayName="Geburtsdatum"
+                           class="form-control input-md" required="" />
+            </div>
+        </div>
+        <!-- Select Basic -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="LV">Ausrichtender LV</label>
+            <div class="col-md-4">
+
+                <InputSelect @bind-Value="examRegistrationRequest.Landesverband" id="LV" name="LV" class="form-control">
+                    @{
+                        foreach (var landesverband in Enum.GetValues(typeof(Landesverband)))
+                        {
+                            <option value="@landesverband">@landesverband</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <!-- File Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Passphoto">Passphoto als JPG</label>
+            <div class="col-md-4">
+                <input id="Passphoto" name="Passphoto" class="input-file" type="file" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Voraussetzungen als .pdf">Teilnahmevoraussetzungen als .pdf</label>
+            <div class="col-md-4">
+                <input id="Voraussetzungen als .pdf" name="Voraussetzungen als .pdf" class="input-file" type="file">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="send">&nbsp;</label>
+            <div class="col-md-4">
+                <button type="submit" name="send">Absenden</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+@code{
+
+    public ExamRegistrationRequest examRegistrationRequest { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        examRegistrationRequest = new ExamRegistrationRequest()
+            {
+                Birthday = DateTime.Today,
+            };
+    }
+
+    private void submitForm()
+    {
+        Console.WriteLine($"Form submitted for {examRegistrationRequest.Name}, {examRegistrationRequest.Surname} with Exam in {examRegistrationRequest.Landesverband}");
+    }
+
+    public class ExamRegistrationRequest
+    {
+        public string Name { get; set; }
+
+        public string Surname { get; set; }
+
+        public DateTime Birthday { get; set; }
+
+        public Landesverband Landesverband { get; set; }
+    }
+
+    public enum Landesverband
+    {
+        Hessen,
+        Sachsen,
+        MecklenburgVorpommern,
+        Bayern,
+        Baden,
+        Wuerttemberg,
+        Thueringen,
+        Saarland,
+        RheinlandPfalz,
+        Nordrhein,
+        Westfalen,
+        Niedersachsen,
+        Hamburg,
+        Bremen,
+        Berlin,
+        Brandenburg,
+        SchleswigHolstein,
+        SachsenAnhalt,
+        Bundesverband
+    }
+}

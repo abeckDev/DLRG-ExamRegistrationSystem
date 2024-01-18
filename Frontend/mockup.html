@@ -1,0 +1,199 @@
+<html>
+<script>
+  function submitForm(event) {
+    event.preventDefault();
+
+    var formData = new FormData(event.target);
+
+    // Convert form data to query parameters
+    var params = new URLSearchParams();
+    for (var pair of formData.entries()) {
+      params.append(pair[0], pair[1]);
+    }
+
+    fetch('http://localhost:7121/api/ClassifyInputFunction?' + params.toString(), {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log('Success:', result);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+</script>
+
+<head>
+  <title>Abgabe TN-Voraussetzungen Anmeldung AL BF</title>
+  <style>
+    input {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-feature-settings: normal;
+      font-kerning: auto;
+      font-optical-sizing: auto;
+      font-size: 16px;
+      font-size-adjust: none;
+      font-stretch: 100%;
+    }
+
+    select {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-feature-settings: normal;
+      font-kerning: auto;
+      font-optical-sizing: auto;
+      font-size: 16px;
+      font-size-adjust: none;
+      font-stretch: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      text-align: left;
+      background-color: #fff line-height:1.5;
+    }
+
+    div {
+      line-height: 3;
+    }
+
+    header {
+      background: #e30613;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 101
+    }
+
+    header .navbar {
+      border-bottom: solid 1px #e30613;
+      min-height: 57px
+    }
+
+    @media (max-width: 1199.98px) {
+      header .navbar .navbar-brand {
+        -webkit-box-flex: 1 !important;
+        -ms-flex: 1 1 auto !important;
+        flex: 1 1 auto !important
+      }
+    }
+
+    header .navbar .navbar-brand img {
+      display: block;
+      max-width: 229px
+    }
+
+    @media (min-width: 1200px) {
+      header .navbar .navbar-brand img {
+        width: 229px
+      }
+    }
+
+    button {
+      margin-left: 150px;
+      padding: 8px;
+      background-color: rgb(0, 123, 255);
+      border-bottom-color: rgb(0, 123, 255);
+      border-bottom-left-radius: 3.2px;
+      border-bottom-right-radius: 3.2px;
+      border-bottom-style: solid;
+      border-bottom-width: 1.333333px;
+      border-image-outset: 0;
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+      display: block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-feature-settings: normal;
+      font-kerning: auto;
+      font-optical-sizing: auto;
+      font-size: 14px;
+      font-size-adjust: none;
+      font-stretch: 100%;
+      font-style: normal;
+    }
+
+    fieldset {
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <img src="./static/dlrg.png" style="margin-left:50px;" alt="DLRG | Anmeldung BF">
+    </nav>
+  </header>
+  <div style="margin:50px;margin-top:100px;">
+    <form onsubmit="submitForm(event)" class="form-horizontal">
+      <fieldset>
+        <!-- Form Name -->
+        <legend>
+          <b>Teilnahmevoraussetzungen AL Bootsf&uuml;hrerschein</b>
+        </legend>
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Name">Name</label>
+          <div class="col-md-4">
+            <input id="surname" name="Name" type="text" placeholder="Name" class="form-control input-md" required="">
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Vorname">Vorname</label>
+          <div class="col-md-4">
+            <input id="name" name="Vorname" type="text" placeholder="Vorname" class="form-control input-md" required="">
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Geburtsdatum">Geburtsdatum</label>
+          <div class="col-md-4">
+            <input id="birthday" name="Geburtsdatum" type="text" placeholder="Geburtsdatum"
+              class="form-control input-md" required="">
+          </div>
+        </div>
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="LV">Ausrichtender LV</label>
+          <div class="col-md-4">
+            <select id="landesverband" name="LV" class="form-control">
+              <option value="BV">Bundesverband</option>
+              <option value="Sachsen">Sachsen</option>
+              <option value="Hessen">Hessen</option>
+            </select>
+          </div>
+        </div>
+        <!-- File Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Passphoto">Passphoto als JPG</label>
+          <div class="col-md-4">
+            <input id="Passphoto" name="Passphoto" class="input-file" type="file">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Voraussetzungen als .pdf">Teilnahmevoraussetzungen als .pdf</label>
+          <div class="col-md-4">
+            <input id="Voraussetzungen als .pdf" name="Voraussetzungen als .pdf" class="input-file" type="file">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="send">&nbsp;</label>
+          <div class="col-md-4">
+            <button id="send" name="send">Absenden</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <!---------------------------  //--------------------------->
+</body>
+
+</html>
