@@ -1,8 +1,9 @@
 ﻿@page "/"
+@inject HttpClient _httpClient
 
 <PageTitle>Home</PageTitle>
 
-<form method="post" @onsubmit="submitForm" @formname="malsehen" class="form-horizontal">
+<form method="post" @onsubmit="SubmitForm" @formname="malsehen" class="form-horizontal">
     <fieldset>
         <!-- Form Name -->
         <legend>
@@ -51,13 +52,13 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="Passphoto">Passphoto als JPG</label>
             <div class="col-md-4">
-                <input id="Passphoto" name="Passphoto" class="input-file" type="file" />
+                <InputFile OnChange="HandlePhotoChange" id="Passphoto" name="Passphoto" class="input-file" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="Voraussetzungen als .pdf">Teilnahmevoraussetzungen als .pdf</label>
             <div class="col-md-4">
-                <input id="Voraussetzungen als .pdf" name="Voraussetzungen als .pdf" class="input-file" type="file">
+                <InputFile OnChange="HandlePdfChange" id="Voraussetzungen als .pdf" name="Voraussetzungen als .pdf" class="input-file" />
             </div>
         </div>
         <div class="form-group">
@@ -81,9 +82,55 @@
             };
     }
 
-    private void submitForm()
+    private async Task HandlePhotoChange(InputFileChangeEventArgs e)
     {
-        Console.WriteLine($"Form submitted for {examRegistrationRequest.Name}, {examRegistrationRequest.Surname} with Exam in {examRegistrationRequest.Landesverband}");
+        var file = e.File;
+        if (file != null)
+        {
+            using (var ms = new MemoryStream())
+            {
+                await file.OpenReadStream().CopyToAsync(ms);
+                examRegistrationRequest.Passphoto = ms.ToArray();
+            }
+        }
+    }
+
+    private async Task HandlePdfChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            using (var ms = new MemoryStream())
+            {
+                await file.OpenReadStream().CopyToAsync(ms);
+                examRegistrationRequest.RequirementsPdf = ms.ToArray();
+            }
+        }
+    }
+
+    private HttpClient _client; // Injected via DI
+
+    private async Task SubmitForm()
+    {
+        using var formData = new MultipartFormDataContent();
+
+        formData.Add(new StringContent(examRegistrationRequest.Name), "Name");
+        formData.Add(new StringContent(examRegistrationRequest.Surname), "Surname");
+        formData.Add(new StringContent(examRegistrationRequest.Birthday.ToString("dd.MM.yyyy")), "Birthday");
+        formData.Add(new StringContent(examRegistrationRequest.Landesverband.ToString()), "Landesverband");
+
+        if (examRegistrationRequest.Passphoto != null)
+            formData.Add(new ByteArrayContent(examRegistrationRequest.Passphoto), "Passphoto");
+
+        if (examRegistrationRequest.RequirementsPdf != null)
+            formData.Add(new ByteArrayContent(examRegistrationRequest.RequirementsPdf), "RequirementsPdf");
+
+        var response = await _httpClient.PostAsync("ClassifyInputFunction", formData);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            // Log or handle the error
+        }
     }
 
     public class ExamRegistrationRequest
@@ -95,6 +142,11 @@
         public DateTime Birthday { get; set; }
 
         public Landesverband Landesverband { get; set; }
+
+        public byte[] Passphoto { get; set; }
+
+        public byte[] RequirementsPdf { get; set; }
+
     }
 
     public enum Landesverband
