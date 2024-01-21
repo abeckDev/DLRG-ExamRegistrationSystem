@@ -83,7 +83,8 @@ The following Tables explains the usage of the needed config parameters:
 | dlrgCloudBasePath          | Base path for DLRG cloud service                  | "WebDav BaseUrl from Nextcloud"                            |
 | blobStorageConnectionString | Connection string for the blob storage account    | "DefaultEndpointsProtocol=https;AccountName=myaccount;AccountKey=mykey;EndpointSuffix=core.windows.net" |
 
-> WARNING: Storing passwords in a config file is meant for local debugging only! Please consider the usage of [.NET Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=linux) to also store local settings in a non plain text mode. Please note that the local.settings.json file will be ignored by git. In a production scenario we will be using an [Azure KeyVault](https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts) to secretly store these secrets.
+> [!CAUTION]
+> Storing passwords in a config file is meant for local debugging only! Please consider the usage of [.NET Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=linux) to also store local settings in a non plain text mode. Please note that the local.settings.json file will be ignored by git. In a production scenario we will be using an [Azure KeyVault](https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts) to secretly store these secrets.
 
 #### Setting up .NET 8 to run the code locally
 
