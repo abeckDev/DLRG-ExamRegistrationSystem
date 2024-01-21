@@ -2,6 +2,11 @@
 
 A system to collect exam requirements from participants of complex DLRG exams such as the Boat Operators License exam.
 
+> [!IMPORTANT]  
+> This is a non official, non DLRG related project, created to support processes or work as an inspiration. It is not approved nor developed by the [AK IT of the DLRG](https://www.dlrg.de/fuer-mitglieder/arbeitskreise/arbeitskreis-informationstechnik/).
+
+In correspondence with the [MIT License](https://github.com/abeckDev/DLRG-ExamRegistrationSystem/LICENSE.md), you may use the software free of chart without limitations but WITHOUT WARRANTY OF ANY KIND. Please review the terms of the [MIT LICENSE](https://opensource.org/license/MIT/) for further information.
+
 ## Architecture
 
 ### Architecture Draft
@@ -143,7 +148,7 @@ This project is built with the following tools:
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/abeckDev/DLRG-ExamRegistrationSystem/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Feel free to file for an issue, or create a pull request in case you have any improvement ideas. Since this is a small PoC project, there is no need for a full contribution document.
 
 ## Authors
 
