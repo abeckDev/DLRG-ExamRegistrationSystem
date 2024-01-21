@@ -5,7 +5,7 @@ A system to collect exam requirements from participants of complex DLRG exams su
 > [!IMPORTANT]  
 > This is a non official, non DLRG related project, created to support processes or work as an inspiration. It is not approved nor developed by the [AK IT of the DLRG](https://www.dlrg.de/fuer-mitglieder/arbeitskreise/arbeitskreis-informationstechnik/).
 
-In correspondence with the [MIT License](https://github.com/abeckDev/DLRG-ExamRegistrationSystem/LICENSE), you may use the software free of chart without limitations but WITHOUT WARRANTY OF ANY KIND. Please review the terms of the [MIT LICENSE](https://opensource.org/license/MIT/) for further information.
+In correspondence with the [MIT License](https://github.com/abeckDev/DLRG-ExamRegistrationSystem/LICENSE)(https://github.com/abeckDev/DLRG-ExamRegistrationSystem/blob/main/LICENSE), you may use the software free of chart without limitations but WITHOUT WARRANTY OF ANY KIND. Please review the terms of the [MIT LICENSE](https://opensource.org/license/MIT/) for further information.
 
 ## Architecture
 
@@ -158,4 +158,4 @@ See also the list of [contributors](https://github.com/abeckDev/DLRG-ExamRegistr
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/abeckDev/DLRG-ExamRegistrationSystem/LICENSE) file for details
+This project is licensed under the MIT License - see the [MIT License](https://github.com/abeckDev/DLRG-ExamRegistrationSystem/LICENSE) file for details
