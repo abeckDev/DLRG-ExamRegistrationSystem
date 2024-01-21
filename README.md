@@ -133,7 +133,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Running the tests
 
-There are not tests and so far not planned. Feel free to file an Issue if you think it might be valuable.
+There are no tests and so far, none are planned. Feel free to file an Issue if you think it might be valuable.
 
 ## Deployment
 
